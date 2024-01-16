@@ -40,6 +40,10 @@ const SearchForm = () => {
 
   return (
     <>
+      <div className="mt-5 text-center">
+        <h1 className="font-bold text-2xl">Wikipedia Search</h1>
+        <h5 className="mt-3 text-gray-600 text-sm">Search for anything here</h5>
+      </div>
       <form className="mt-5" onSubmit={handleSearchQuery}>
         <div className="flex gap-1 justify-center">
           <input 
