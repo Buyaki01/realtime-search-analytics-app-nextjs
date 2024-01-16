@@ -8,12 +8,14 @@ const SearchForm = () => {
   const [searchQuery, setSearchQuery] = useState("")
 
   // const searchParams = useSearchParams()
-  // const searchQuery = searchParams.get('query')
+  // const urlSearchQuery = searchParams.get('query')
 
   const handleSearchQuery = async (e) => {
     e.preventDefault()
     
-    await axios.post('/api/search', { searchQuery })
+    const response = await axios.post('/api/search', { searchQuery })
+    console.log("This is the response coming from the backend: ", response.data.searchResults)
+    // await axios.post(`/api/search?query=${urlSearchQuery}`, { urlSearchQuery })
   }
 
   return (
