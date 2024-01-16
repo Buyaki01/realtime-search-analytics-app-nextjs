@@ -13,8 +13,8 @@ export const POST = async (request) => {
     
     SearchRecord.create({ searchQuery, userIp: forwardedFor  })
   } catch (error) {
-    console.error("Error occured while saving to the SerachRecord model!:", error)
-    return NextResponse.json({ error: "Error occured while saving to the SerachRecord model" }, { status: 500 })
+    console.error("Error occured while saving to the SearchRecord model!:", error)
+    return NextResponse.json({ error: "Error occured while saving to the SearchRecord model" }, { status: 500 })
   }
 
   const wikipediaUrl = `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${searchQuery}&gsrlimit=20&prop=pageimages|extracts&exchars=200&exintro&explaintext&exlimit=max&format=json&origin=*`

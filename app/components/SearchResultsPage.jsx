@@ -3,9 +3,9 @@ const SearchResultsPage = ({ searchResultsData }) => {
     <>
       {searchResultsData && searchResultsData.length === 0 
         ? '' 
-        : <div className="w-full flex flex-col items-center justify-center mt-10">
+        : <div className="flex flex-col items-center justify-center mt-10">
             {searchResultsData && searchResultsData.map(result => (
-              <div key={result.pageId} className="w-[600px] flex gap-2 p-4 shadow-md mb-4">
+              <div key={result.pageId} className="flex gap-2 p-4 shadow-md mb-4">
                 {result.image ? (
                   <>
                     <div className="flex w-48 items-center p-2">
