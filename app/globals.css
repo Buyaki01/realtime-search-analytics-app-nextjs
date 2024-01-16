@@ -14,6 +14,10 @@ button, button[type="submit"] {
   background-color: #d40d9a;
 }
 
+button[type="button"] {
+  @apply bg-red-500;
+}
+
 button:hover{
   background-color: #a00a7c;
 }

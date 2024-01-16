@@ -23,6 +23,21 @@ const SearchForm = () => {
     setSearchResultsData(response.data.searchResults)
   }
 
+  const handleReset = () => {
+    setSearchQuery("")
+    setSearchResultsData(null)
+  }
+
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value
+    setSearchQuery(inputValue)
+
+    // Clear search results when the input field is empty
+    if (inputValue.trim() === "") {
+      setSearchResultsData(null)
+    }
+  }
+
   return (
     <>
       <form className="mt-5" onSubmit={handleSearchQuery}>
@@ -32,7 +47,7 @@ const SearchForm = () => {
             placeholder="Search here"
             className="px-4 py-2 rounded-md border border-solid"
             value={searchQuery}
-            onChange={(e) => {setSearchQuery(e.target.value)}}
+            onChange={handleInputChange}
           />
 
           <button 
@@ -40,6 +55,14 @@ const SearchForm = () => {
             className="px-4 py-2 rounded-md text-white"
           >
             Submit
+          </button>
+
+          <button
+            type="button"
+            className="px-4 py-2 rounded-md text-white"
+            onClick={handleReset}
+          >
+            Clear Search
           </button>
         </div>
       </form>
