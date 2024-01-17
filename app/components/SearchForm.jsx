@@ -2,12 +2,10 @@
 
 import axios from "axios"
 import { useState } from "react"
-import SearchResultsPage from "./SearchResultsPage"
 import toast from "react-hot-toast"
 
-const SearchForm = () => {
+const SearchForm = ({ setSearchResultsData }) => {
   const [searchQuery, setSearchQuery] = useState("")
-  const [searchResultsData, setSearchResultsData] = useState(null)
 
   const handleSearchQuery = async (e) => {
     e.preventDefault()
@@ -41,7 +39,7 @@ const SearchForm = () => {
   return (
     <>
       <div className="mt-5 text-center">
-        <h1 className="font-bold text-2xl">Wikipedia Search</h1>
+        <h1 className="font-bold text-2xl text-white">Wikipedia Search</h1>
         <h5 className="mt-3 text-gray-600 text-sm">Search for anything here</h5>
       </div>
       <form className="mt-5" onSubmit={handleSearchQuery}>
@@ -70,8 +68,6 @@ const SearchForm = () => {
           </button>
         </div>
       </form>
-
-      <SearchResultsPage searchResultsData={searchResultsData} />
     </>
   )
 }
