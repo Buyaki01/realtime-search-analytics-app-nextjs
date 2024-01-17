@@ -1,9 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import SearchAnalyticsPage from "./SearchAnalyticsPage"
 import SearchForm from "./SearchForm"
 import SearchResultsPage from "./SearchResultsPage"
+import TodaysAnalyticsPage from "./searchAnalytics/TodaysAnalyticsPage"
 
 const HomePage = () => {
   const [searchResultsData, setSearchResultsData] = useState(null)
@@ -15,8 +15,8 @@ const HomePage = () => {
         <SearchResultsPage searchResultsData={searchResultsData} />
       </div>
 
-      <div className="col-1 p-2 shadow-md bg-gray-500 m-2 h-48">
-        <SearchAnalyticsPage />
+      <div className="col-1 p-2 shadow-md bg-primary m-2">
+        <TodaysAnalyticsPage />
       </div>
     </div>
   )
