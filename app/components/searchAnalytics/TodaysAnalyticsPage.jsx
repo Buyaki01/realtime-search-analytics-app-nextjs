@@ -6,6 +6,7 @@ import toast from "react-hot-toast"
 
 const TodaysAnalyticsPage = () => {
   const [searchAnalyticsToday, setSearchAnalyticsToday] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchSearchAnalyticsToday = async () => {
@@ -16,10 +17,12 @@ const TodaysAnalyticsPage = () => {
           },
         })
         setSearchAnalyticsToday(response.data.searchAnalyticsToday)
+        setLoading(false)
 
       } catch (error) {
         console.error("Error fetching search analytics today:", error)
         toast.error("Error occured! Please refresh the page and try again")
+        setLoading(false)
       }
     }
 
@@ -29,22 +32,26 @@ const TodaysAnalyticsPage = () => {
   return (
     <div className="mb-5 text-white">
       <h3 className="text-xl font-bold mb-3">10 Most Searched Words Today</h3>
-      <table className="table-auto border border-2 border-collapse w-full">
-        <thead>
-          <tr className="">
-            <th className="border px-4 py-2">Searched Word</th>
-            <th className="border px-4 py-2">No. of times Searched</th>
-          </tr>
-        </thead>
-        <tbody>
-          {searchAnalyticsToday.map((item, index) => (
-            <tr key={index}>
-              <td className="border px-4 py-2">{item._id}</td>
-              <td className="border px-4 py-2">{item.count}</td>
+      {loading ? ( 
+        <p className="mt-3">Loading...</p>
+      ) : (
+        <table className="table-auto border border-2 border-collapse w-full">
+          <thead>
+            <tr>
+              <th className="border px-4 py-2">Searched Word</th>
+              <th className="border px-4 py-2">No. of times Searched</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {searchAnalyticsToday.map((item, index) => (
+              <tr key={index}>
+                <td className="border px-4 py-2">{item._id}</td>
+                <td className="border px-4 py-2">{item.count}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   )
 }

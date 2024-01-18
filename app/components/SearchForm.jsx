@@ -4,11 +4,13 @@ import axios from "axios"
 import { useState } from "react"
 import toast from "react-hot-toast"
 
-const SearchForm = ({ setSearchResultsData }) => {
+const SearchForm = ({ setSearchResultsData, setLoading }) => {
   const [searchQuery, setSearchQuery] = useState("")
 
   const handleSearchQuery = async (e) => {
     e.preventDefault()
+
+    setLoading(true)
 
     const cleanedInput = searchQuery.replace(/\s+/g, ' ').trim()
 
@@ -17,15 +19,22 @@ const SearchForm = ({ setSearchResultsData }) => {
       return
     }
 
-    const response = await axios.post('/api/search', { searchQuery: cleanedInput })
+    try {
+      const response = await axios.post(`/api/search`, { searchQuery: cleanedInput })
 
-    if (response.data.message === "Search query not found") {
-      toast.error("Word not found!")
-      setSearchResultsData(null)
-      return
+      if (response.data.message === "Search query not found") {
+        toast.error("Word not found!")
+        setSearchResultsData(null)
+        return
+      } else {
+        setSearchResultsData(response.data.searchResults)
+      }
+    } catch (error) {
+      console.error("Error occurred during search:", error)
+      toast.error("An error occurred during search. Please try again later.")
     }
 
-    setSearchResultsData(response.data.searchResults)
+    setLoading(false)
   }
 
   const handleReset = () => {
