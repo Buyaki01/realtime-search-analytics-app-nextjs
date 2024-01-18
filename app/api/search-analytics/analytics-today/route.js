@@ -29,7 +29,13 @@ export const GET = async () => {
       },
     ])
 
-    return NextResponse.json({ searchAnalyticsToday })
+    console.log("This is the search analytics today in GET api route: ", searchAnalyticsToday)
+
+    return NextResponse.json({ searchAnalyticsToday }, {
+      headers: {
+        'Cache-Control': 'no-store',
+      },
+    })
   } catch (error) {
     console.error("Error occured while fetching search analytics today!:", error)
     return NextResponse.json({ error: "Error occured while fetching search analytics today" }, { status: 500 })

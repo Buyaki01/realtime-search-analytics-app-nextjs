@@ -12,9 +12,8 @@ const TodaysAnalyticsPage = () => {
       try {
         const response = await axios.get("/api/search-analytics/analytics-today", {
           headers: {
-            'Cache-Control': 'max-age=0',
+            'Cache-Control': 'no-store', // Disable caching
           },
-          next: { revalidate: 10 },
         })
         setSearchAnalyticsToday(response.data.searchAnalyticsToday)
 

@@ -10,7 +10,7 @@ const SearchForm = ({ setSearchResultsData }) => {
   const handleSearchQuery = async (e) => {
     e.preventDefault()
 
-    const cleanedInput = searchQuery.replace(/\s+/g, ' ').trim();
+    const cleanedInput = searchQuery.replace(/\s+/g, ' ').trim()
 
     if (cleanedInput === "") {
       toast.error('Please enter a search query')

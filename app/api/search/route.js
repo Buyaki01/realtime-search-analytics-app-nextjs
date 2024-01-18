@@ -32,6 +32,10 @@ export const POST = async (request) => {
     extract: result.extract,
     image: result.thumbnail?.source || null,
   }))
-  
-  return NextResponse.json({ searchResults })
+
+  return NextResponse.json({ searchResults }, {
+    headers: {
+      'Cache-Control': 'no-store', // Disable caching
+    },
+  })
 }
