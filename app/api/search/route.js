@@ -21,6 +21,10 @@ export const POST = async (request) => {
 
   const response = await fetch(wikipediaUrl)
   const data = await response.json()
+
+  if (!data.query || !data.query.pages || Object.keys(data.query.pages).length === 0) {
+    return NextResponse.json({ message: "Search query not found" }, { status: 404 })
+  }
   
   const searchResults = Object.values(data.query.pages).map((result) => ({
     pageId: result.pageid,

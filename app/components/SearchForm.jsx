@@ -18,6 +18,13 @@ const SearchForm = ({ setSearchResultsData }) => {
     }
 
     const response = await axios.post('/api/search', { searchQuery: cleanedInput })
+
+    if (response.data.message === "Search query not found") {
+      toast.error("Word not found!")
+      setSearchResultsData(null)
+      return
+    }
+
     setSearchResultsData(response.data.searchResults)
   }
 

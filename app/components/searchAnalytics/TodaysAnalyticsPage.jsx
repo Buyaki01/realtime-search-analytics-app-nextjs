@@ -10,7 +10,12 @@ const TodaysAnalyticsPage = () => {
   useEffect(() => {
     const fetchSearchAnalyticsToday = async () => {
       try {
-        const response = await axios.get("/api/search-analytics/analytics-today")
+        const response = await axios.get("/api/search-analytics/analytics-today", {
+          headers: {
+            'Cache-Control': 'max-age=0',
+          },
+          next: { revalidate: 10 },
+        })
         setSearchAnalyticsToday(response.data.searchAnalyticsToday)
 
       } catch (error) {
