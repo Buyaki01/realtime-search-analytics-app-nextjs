@@ -1,7 +1,6 @@
 'use client'
 
 import axios from "axios"
-import { useState } from "react"
 import toast from "react-hot-toast"
 
 const SearchForm = ({ searchQuery, setSearchQuery, setSearchResultsData, setLoading }) => {
@@ -23,9 +22,11 @@ const SearchForm = ({ searchQuery, setSearchQuery, setSearchResultsData, setLoad
 
       if (response.data.message === "Search query not found") {
         toast.error("Word not found!")
+        setSearchQuery('')
         setSearchResultsData(null)
         return
       } else {
+        setSearchQuery('')
         setSearchResultsData(response.data.searchResults)
       }
     } catch (error) {
