@@ -4,8 +4,7 @@ import axios from "axios"
 import { useState } from "react"
 import toast from "react-hot-toast"
 
-const SearchForm = ({ setSearchResultsData, setLoading }) => {
-  const [searchQuery, setSearchQuery] = useState("")
+const SearchForm = ({ searchQuery, setSearchQuery, setSearchResultsData, setLoading }) => {
 
   const handleSearchQuery = async (e) => {
     e.preventDefault()

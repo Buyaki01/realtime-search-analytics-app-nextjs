@@ -15,7 +15,7 @@ export const GET = async () => {
       },
       {
         $group: {
-          _id: "$searchQuery",
+          _id: { userIp: "$userIp", searchQuery: "$searchQuery" },
           count: { $sum: 1 },
         },
       },
@@ -29,9 +29,13 @@ export const GET = async () => {
       },
     ])
 
-    console.log("This is the search analytics today in GET api route: ", searchAnalyticsToday)
+    const formattedAnalytics = searchAnalyticsToday.map(({ _id, count }) => ({
+      userIp: _id.userIp,
+      searchQuery: _id.searchQuery,
+      count
+    }))
 
-    return NextResponse.json({ searchAnalyticsToday }, {
+    return NextResponse.json({ formattedAnalytics }, {
       headers: {
         'Cache-Control': 'no-store',
       },
