@@ -2,8 +2,15 @@ import connectMongoDB from "@/lib/mongoose"
 import SearchRecord from "@/models/searchRecord"
 import moment from "moment"
 import { NextResponse } from "next/server"
+import { headers } from 'next/headers'
 
 export const GET = async () => {
+  const userIp = headers().get('x-real-ip') || headers().get('x-forwarded-for')
+
+  if (!userIp) {
+    return NextResponse.json({ error: "User IP address not available" }, { status: 400 })
+  }
+
   try {
     await connectMongoDB()
 
@@ -11,11 +18,14 @@ export const GET = async () => {
     
     const searchAnalyticsToday = await SearchRecord.aggregate([
       {
-        $match: { createdAt: { $gte: new Date(today) } }
+        $match: {
+          createdAt: { $gte: new Date(today) },
+          userIp: userIp
+        }
       },
       {
         $group: {
-          _id: "$searchQuery",
+          _id: { userIp: "$userIp", searchQuery: "$searchQuery" },
           count: { $sum: 1 },
         },
       },
@@ -29,9 +39,13 @@ export const GET = async () => {
       },
     ])
 
-    console.log("This is the search analytics today in GET api route: ", searchAnalyticsToday)
+    const formattedAnalytics = searchAnalyticsToday.map(({ _id, count }) => ({
+      userIp: _id.userIp,
+      searchQuery: _id.searchQuery,
+      count
+    }))
 
-    return NextResponse.json({ searchAnalyticsToday }, {
+    return NextResponse.json({ formattedAnalytics }, {
       headers: {
         'Cache-Control': 'no-store',
       },

@@ -1,11 +1,10 @@
 'use client'
 
 import axios from "axios"
-import { useState } from "react"
+import Link from "next/link"
 import toast from "react-hot-toast"
 
-const SearchForm = ({ setSearchResultsData, setLoading }) => {
-  const [searchQuery, setSearchQuery] = useState("")
+const SearchForm = ({ searchQuery, setSearchQuery, setSearchResultsData, setLoading }) => {
 
   const handleSearchQuery = async (e) => {
     e.preventDefault()
@@ -24,9 +23,11 @@ const SearchForm = ({ setSearchResultsData, setLoading }) => {
 
       if (response.data.message === "Search query not found") {
         toast.error("Word not found!")
+        setSearchQuery('')
         setSearchResultsData(null)
         return
       } else {
+        setSearchQuery('')
         setSearchResultsData(response.data.searchResults)
       }
     } catch (error) {
@@ -77,11 +78,18 @@ const SearchForm = ({ setSearchResultsData, setLoading }) => {
 
           <button
             type="button"
-            className="px-4 py-2 rounded-md text-white"
+            className="px-4 py-2 rounded-md text-white hover:"
             onClick={handleReset}
           >
             Clear Search
           </button>
+
+          {/* <button
+            className="px-4 py-2 rounded-md text-white bg-slate-500 hover:bg-slate-800"
+            
+          >
+            <Link href={'/search-analytics'}>Get Your Search Analytics</Link>
+          </button> */}
         </div>
       </form>
     </>
