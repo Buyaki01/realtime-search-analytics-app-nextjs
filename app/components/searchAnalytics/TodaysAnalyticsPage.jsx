@@ -38,7 +38,7 @@ const TodaysAnalyticsPage = ({searchQuery}) => {
           ( <p className="mt-5 text-center">Loading...</p> ) 
         : searchAnalyticsToday.length === 0 
           ? (
-              <p className="mt-5 text-center">No searched word today</p>
+              <p className="mt-5 text-center">Search Anything in the search box and get your search analytics</p>
             )
           : (
               <table className="table-auto px-2">

@@ -2,8 +2,15 @@ import connectMongoDB from "@/lib/mongoose"
 import SearchRecord from "@/models/searchRecord"
 import moment from "moment"
 import { NextResponse } from "next/server"
+import { headers } from 'next/headers'
 
 export const GET = async () => {
+  const userIp = headers().get('x-real-ip') || headers().get('x-forwarded-for')
+
+  if (!userIp) {
+    return NextResponse.json({ error: "User IP address not available" }, { status: 400 })
+  }
+
   try {
     await connectMongoDB()
 
@@ -11,7 +18,10 @@ export const GET = async () => {
     
     const searchAnalyticsToday = await SearchRecord.aggregate([
       {
-        $match: { createdAt: { $gte: new Date(today) } }
+        $match: {
+          createdAt: { $gte: new Date(today) },
+          userIp: userIp
+        }
       },
       {
         $group: {

@@ -6,12 +6,15 @@ import { headers } from 'next/headers'
 export const POST = async (request) => {
   const { searchQuery } = await request.json()
 
-  const forwardedFor = headers().get('x-forwarded-for')
+  const userIp = headers().get('x-real-ip') || headers().get('x-forwarded-for')
+
+  if (!userIp) {
+    return NextResponse.json({ error: "User IP address not available" }, { status: 400 })
+  }
 
   try {
     await connectMongoDB()
-    
-    SearchRecord.create({ searchQuery, userIp: forwardedFor  })
+    await SearchRecord.create({ searchQuery, userIp })
   } catch (error) {
     console.error("Error occured while saving to the SearchRecord model!:", error)
     return NextResponse.json({ error: "Error occurred while saving to the SearchRecord model" }, {
@@ -23,6 +26,9 @@ export const POST = async (request) => {
 
   try {
     const response = await fetch(wikipediaUrl)
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`)
+    }
     const data = await response.json()
 
     if (!data.query || !data.query.pages || Object.keys(data.query.pages).length === 0) {
