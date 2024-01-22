@@ -1,6 +1,7 @@
 'use client'
 
 import axios from "axios"
+import Link from "next/link"
 import toast from "react-hot-toast"
 
 const SearchForm = ({ searchQuery, setSearchQuery, setSearchResultsData, setLoading }) => {
@@ -77,10 +78,17 @@ const SearchForm = ({ searchQuery, setSearchQuery, setSearchResultsData, setLoad
 
           <button
             type="button"
-            className="px-4 py-2 rounded-md text-white"
+            className="px-4 py-2 rounded-md text-white hover:"
             onClick={handleReset}
           >
             Clear Search
+          </button>
+
+          <button
+            className="px-4 py-2 rounded-md text-white bg-slate-500 hover:bg-slate-800"
+            
+          >
+            <Link href={'/search-analytics'}>Get Your Search Analytics</Link>
           </button>
         </div>
       </form>

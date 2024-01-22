@@ -18,6 +18,10 @@ button[type="button"] {
   @apply bg-red-500;
 }
 
+button[type="button"]:hover {
+  @apply bg-red-800;
+}
+
 button:hover{
   background-color: #a00a7c;
 }

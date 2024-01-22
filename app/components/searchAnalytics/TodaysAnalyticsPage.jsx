@@ -8,7 +8,6 @@ const TodaysAnalyticsPage = ({searchQuery}) => {
   const [searchAnalyticsToday, setSearchAnalyticsToday] = useState([])
   const [loading, setLoading] = useState(true)
 
-
   useEffect(() => {
     const fetchSearchAnalyticsToday = async () => {
       console.log("This is the search query in today's analytics: ", searchQuery)
